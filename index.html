@@ -92,13 +92,28 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/favicon/apple-touch-icon.png" />
 <link rel="manifest" href="/assets/images/favicon/site.webmanifest" />
 
-<script src="/assets/js/theme-toggle.js"></script>
-
 <link
   href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
   rel="stylesheet"
 />
-<link id="theme-stylesheet" rel="stylesheet" href="/assets/css/light.css">
+
+<script>
+  (function () {
+    const preferred = localStorage.getItem('preferred-theme-file');
+    const themeFile = preferred || 'light.css';
+    const theme = themeFile.includes('dark') ? 'dark' : 'light';
+
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = '/assets/css/' + themeFile;
+    link.id = 'theme-stylesheet';
+    document.head.appendChild(link);
+
+    document.documentElement.setAttribute('data-theme', theme);
+  })();
+</script>
+
+<script src="/assets/js/theme-toggle.js"></script>
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
 <script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js"></script>
