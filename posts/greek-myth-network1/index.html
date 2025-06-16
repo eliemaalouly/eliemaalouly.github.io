@@ -1,0 +1,829 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.1 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Mapping the Mythos: Part I - Quantified Curiosities</title>
+<meta name="description" content="In this two-part series, we will explore the fascinating world of Greek mythology through the lens of network analysis. By examining the relationships between characters, we can uncover hidden patterns and insights about the mythological universe and the people who wrote them. In Part I, we will focus on the data gathering and information extraction process, while Part II will delve into the analysis of the central figures and their roles within the narrative structure. The code for this project is available on GitHub.">
+
+
+  <meta name="author" content="Elie Maalouly">
+  
+  <meta property="article:author" content="Elie Maalouly">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en">
+<meta property="og:site_name" content="Quantified Curiosities">
+<meta property="og:title" content="Mapping the Mythos: Part I">
+<meta property="og:url" content="https://quantifiedcuriosities.com/posts/greek-myth-network1/">
+
+
+  <meta property="og:description" content="In this two-part series, we will explore the fascinating world of Greek mythology through the lens of network analysis. By examining the relationships between characters, we can uncover hidden patterns and insights about the mythological universe and the people who wrote them. In Part I, we will focus on the data gathering and information extraction process, while Part II will delve into the analysis of the central figures and their roles within the narrative structure. The code for this project is available on GitHub.">
+
+
+
+  <meta property="og:image" content="https://quantifiedcuriosities.com/assets/images/posts/greek-myth-network1/hero.png">
+
+
+
+
+
+  <meta property="article:published_time" content="2025-06-15T00:00:00+02:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://quantifiedcuriosities.com/posts/greek-myth-network1/">
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Quantified Curiosities Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  window.enable_copy_code_button = true;
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <link rel="icon" type="image/svg+xml" href="/assets/images/favicon/favicon.svg" />
+
+<link rel="icon" type="image/png" href="/assets/images/favicon/favicon-96x96.png" sizes="96x96" />
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/images/favicon/apple-touch-icon.png" />
+<link rel="manifest" href="/assets/images/favicon/site.webmanifest" />
+
+<script src="/assets/js/theme-toggle.js"></script>
+
+<link
+  href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+  rel="stylesheet"
+/>
+<link id="theme-stylesheet" rel="stylesheet" href="/assets/css/light.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js"></script>
+
+<script src="/assets/js/masthead-scroll.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-check-compat.js"></script>
+
+<script>
+  window.addEventListener('DOMContentLoaded', function () {
+    const firebaseConfig = {
+      apiKey: "AIzaSyBfzn-eQV1lY0dHAtXE0_oaYUK8f41b2xA",
+      authDomain: "duckcounter-88107.firebaseapp.com",
+      databaseURL: "https://duckcounter-88107-default-rtdb.europe-west1.firebasedatabase.app",
+      projectId: "duckcounter-88107",
+      storageBucket: "duckcounter-88107.firebasestorage.app",
+      messagingSenderId: "17921681395",
+      appId: "1:17921681395:web:42154225a98d8a20d81486"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+
+    firebase.appCheck().activate(
+      '6LeFDWIrAAAAACLgk8Y1IhzewXUYRzT0JjN33NrO',
+      true
+    );
+  });
+</script>
+
+<script src="/assets/js/easter-egg.js"></script>
+
+<script>
+window.addEventListener("load", function(){
+
+  var cc = window.cookieconsent.initialise({
+    palette: {
+      popup:  { background: "#000" },
+      button: { background: "#f1d600", text: "#000" }
+    },
+    theme: "edgeless",
+    type: "opt-in",
+    content: {
+      message: "We use cookies for analytics. Do you accept?",
+      dismiss: "Accept",
+      deny:    "Decline",
+      link:    "Learn more",
+      href:    "/privacy-policy/"
+    },
+
+    onInitialise: function(status) {
+      if (this.hasConsented()) {
+        console.log("CookieConsent: initial consent granted");
+        loadAnalytics();
+      } else {
+        console.log("CookieConsent: initial consent denied");
+      }
+    },
+
+    onStatusChange: function(status, chosenBefore) {
+      if (this.hasConsented()) {
+        console.log("CookieConsent: status changed to granted");
+        loadAnalytics();
+      } else {
+        console.log("CookieConsent: status changed to denied");
+      }
+    }
+  });
+
+  function loadAnalytics() {
+    if (window.GA_LOADED) return;
+    window.GA_LOADED = true;
+    console.log("Loading Google Analytics…");
+
+    var s = document.createElement('script');
+    s.src = "https://www.googletagmanager.com/gtag/js?id=G-3L16HRLCNP";
+    s.async = true;
+    document.head.appendChild(s);
+
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    window.gtag = gtag;
+    gtag('js', new Date());
+    gtag('config', 'G-3L16HRLCNP', { anonymize_ip: true });
+  }
+});
+</script>
+
+
+
+  </head>
+
+  <body class="layout--single justified-post" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="/">
+            <span class="site-logo--mobile">
+            <img id="site-logo" src="/assets/images/logo/logo-light.png" alt="Quantified Curiosities"></a>
+            </span>
+        
+        <div style="display: flex; align-items: center; gap: 1rem;">
+  <a class="site-title" href="/">
+    <span class="site-title--desktop">
+    Quantified Curiosities
+  </span>
+  <span class="site-title--mobile">
+    Q.C.
+  </span>
+    
+  </a>
+</div>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/"
+                
+                
+              >Home</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/posts/"
+                
+                
+              >Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/about/"
+                
+                
+              >About</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/privacy-policy/"
+                
+                
+              >Privacy Policy</a>
+            </li></ul>
+        <button id="theme-toggle" aria-label="Toggle theme" title="Switch theme"
+          style="background: none; border: none; cursor: pointer;">
+    <span id="theme-icon"></span>
+  </button>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+  
+
+
+
+
+
+
+
+
+
+
+
+<div class="page__hero--overlay"
+  style="
+    
+    
+      background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/assets/images/posts/greek-myth-network1/hero.png');
+      background-position: top center;
+    
+    
+      min-height: 36vw;
+    
+    
+      max-height: 72vw;
+    
+  ">
+
+  
+    <div class="wrapper">
+      <h1 id="page-title" class="page__title" itemprop="headline">
+        
+          Mapping the Mythos: Part I
+
+        
+      </h1>
+      
+        <p class="page__lead">Assembling the Cast of Gods, Heroes and Monsters
+</p>
+      
+      
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2025-06-15T00:00:00+02:00">June 15, 2025</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          19 minute read
+        
+      </span>
+    
+  </p>
+
+
+      
+    </div>
+  
+  
+</div>
+
+
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+  
+    
+      
+      
+      
+      
+    
+    
+      <nav class="nav__list">
+  
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">Toggle Menu</label>
+  <ul class="nav__items">
+    
+      
+      
+        <li>
+          
+            <span class="nav__sub-title">Mapping the Mythos</span>
+          
+
+          
+          <ul>
+            
+              <li><a href="/posts/greek-myth-network1/" class="active">Part I</a></li>
+            
+              <li><a href="/posts/greek-myth-network2/">Part II</a></li>
+            
+          </ul>
+          
+        </li>
+      
+    
+  </ul>
+</nav>
+
+    
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Mapping the Mythos: Part I">
+    <meta itemprop="description" content="In this two-part series, we will explore the fascinating world of Greek mythology through the lens of network analysis. By examining the relationships between characters, we can uncover hidden patterns and insights about the mythological universe and the people who wrote them. In Part I, we will focus on the data gathering and information extraction process, while Part II will delve into the analysis of the central figures and their roles within the narrative structure. The code for this project is available on GitHub.">
+    <meta itemprop="datePublished" content="2025-06-15T00:00:00+02:00">
+    
+
+    <div class="page__inner-wrap">
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-fa-solid fa-scroll"></i>  On This Page</h4></header>
+              <ul class="toc__menu"><li><a href="#introduction">Introduction</a></li><li><a href="#methodology">Methodology</a><ul><li><a href="#centrality-in-networks">Centrality in Networks</a></li><li><a href="#defining-relationships">Defining Relationships</a></li></ul></li><li><a href="#data-collection">Data Collection</a><ul><li><a href="#text-corpus">Text Corpus</a></li><li><a href="#character-dataset">Character dataset</a></li></ul></li><li><a href="#nodes-and-edges-extraction">Nodes and edges extraction</a></li></ul>
+            </nav>
+          </aside>
+        
+        <p>In this two-part series, we will explore the fascinating world of Greek mythology through the lens of network analysis. By examining the relationships between characters, we can uncover hidden patterns and insights about the mythological universe and the people who wrote them. In Part I, we will focus on the data gathering and information extraction process, while Part II will delve into the analysis of the central figures and their roles within the narrative structure. The code for this project is available on <a href="https://github.com/eliemaalouly/greek-myth-network" target="_blank" rel="noopener noreferrer">GitHub</a>.</p>
+
+<p><br /></p>
+
+<h1 id="introduction">Introduction</h1>
+
+<p>Ancient Greek mythology is more than just a collection of stories. It’s a vast, interconnected web of gods, heroes, monsters, and tragedies. But what if we treated this mythology not just as literature, but as a system, a network we could map, analyze, and explore?</p>
+
+<p>I started with a set of big, open-ended questions, the kind you’d ask if you were trying to understand mythology not just as literature, but as a complex network of relationships:</p>
+<ol>
+  <li>Who are the most central and influential characters in Greek mythology?</li>
+  <li>What communities or clusters emerge and what do they correspond to?</li>
+  <li>How does a character’s centrality relate to their gender?</li>
+  <li>How does this centrality shift when we transition from Greek to Roman mythology?</li>
+</ol>
+
+<p>These aren’t just trivia questions, they touch on the structural logic of myth. Greek mythology isn’t random (for the most part); it’s a universe with its own internal order. But most of that order is hidden in prose, spread across dozens of authors and centuries of storytelling. As a project, I wanted to extract this hidden structure. By representing the mythological universe as a graph with characters as nodes and relationships as edges, we can use tools from network analysis to surface new insights and hopefully answer these questions.</p>
+
+<p><br /></p>
+
+<h1 id="methodology">Methodology</h1>
+
+<p>To explore these questions, I built a dataset of characters and relationships directly from ancient mythological texts. I began by scraping English translations of primary sources from <a href="https://www.theoi.com" target="_blank" rel="noopener noreferrer">Theoi.com</a>, parsing and structuring the text into smaller narrative units. I then compiled a comprehensive list of mythological characters using <a href="https://www.wikidata.org/" target="_blank" rel="noopener noreferrer">Wikidata</a>, filtering for relevance and type. From there, I used natural language processing to identify character mentions and infer relationships based on co-occurrences. These relationships were stored as edges in a graph, enabling network analysis to uncover patterns of centrality, clustering, and thematic structure across the mythological corpus.</p>
+
+<p>Now in order to answer our questions we need to define our methodology properly. Here it would be useful to take a break from the technical details to talk about centrality in general, and how we will use it in this project. What does it mean to be central in a network? What are the different ways we can measure it? And how do these measures relate to the mythology we’re studying? How will we calculate these measures?</p>
+
+<p class="notice--danger"><strong>The dreaded terminology alert</strong>: Several new terms will be introduced, which may be overwhelming and frankly a bit boring! I’ll try to make it as painless as possible by explaining all these new terms in the simplest way possible. Feel free to skip ahead if you are already familiar with them.</p>
+
+<h2 id="centrality-in-networks">Centrality in Networks</h2>
+
+<p>The two most basic terms that will be used throughout this project are <strong>nodes</strong> and <strong>edges</strong> and they are the simplest to understand. Simply put, nodes are the characters in our mythological network, and edges are the relationships between them. In network analysis, we represent these characters and their relationships as a graph, where nodes are points and edges are lines connecting them. This graph structure allows us to analyze the relationships between characters in a systematic way. There isn’t much more to say on these two terms, so let’s move on to the more interesting part: centrality.</p>
+
+<p>Centrality is a key concept in network analysis, measuring the importance or influence of a node (character) within a network. In the context of Greek mythology, centrality can help us identify which characters are most pivotal to the narrative structure. There are several different ways to measure centrality based on how we decide to define it. So here is a brief simplified overview of the main centrality measures we will use in this project and how they relate to our mythological network:</p>
+<ol>
+  <li><strong>Degree Centrality</strong>: The simplest measure, counting the number of direct connections a node has. It tells us who has the most relationships (“You’re important because a lot of people are directly connected to you”).<br />
+    <blockquote>
+      <p>In Greek mythology, <strong>Who interacts with the most people?</strong><br />
+Some characters are everywhere. You see them in many myths interacting with lots of other figures. For example, we can imagine that Zeus has a high degree centrality because he’s directly connected (<a href="/assets/images/posts/greek-myth-network1/zeus.jpg" class="image-popup">unfortunately not in a nice way!</a>) to countless others regardless of whether they are major or minor characters. It’s the number of relationships that counts here (and Zeus is no slouch in that department!).</p>
+    </blockquote>
+  </li>
+  <li><strong>Betweenness Centrality</strong>: This measures how often a node lies on the shortest path between other nodes. It tells us who connects separate groups and helps information travel through the network (“You’re important because others rely on you to stay connected”).<br />
+    <blockquote>
+      <p>In Greek mythology, <strong>Who connects different groups?</strong><br />
+Some characters move between different parts of the mythological universe, such as the world of gods, mortals, and the underworld, or between Greek tragedies and Epics. They’re not just famous, they’re the link between different parts of the mythology. For example, Hermes might have high betweenness centrality because he connects gods to mortals, acting as a messenger and guide to the underworld. Hermes is therefore central, because without him, a lot of characters and places wouldn’t be connected.</p>
+    </blockquote>
+  </li>
+  <li><strong>Eigenvector Centrality</strong>: This measure considers the quality and influence of a node’s connections. It tells us who is linked to other important people, not just how many people they know (“You’re important because your friends are important”).<br />
+    <blockquote>
+      <p>In Greek mythology, <strong>Who has powerful friends?</strong><br />
+Not all connections are equal. Some characters are influential because they’re close to other influential characters. For example, Athena may not have the most connections, but her relationships are high-quality. She advises Odysseus, Perseus, and Heracles, and she’s a trusted daughter of Zeus. Athena is therefore central because her connections are big players in the myths.</p>
+    </blockquote>
+  </li>
+  <li><strong>PageRank</strong>: It measures the influence of a node based on the number and quality of links it receives, similar to eigenvector centrality but with a probabilistic interpretation. It tells us how often you’re mentioned or pointed to by respected others, even if not directly connected to many (“You’re important because important people choose to talk about or link to you”).<br />
+    <blockquote>
+      <p>In Greek mythology, <strong>Who gets attention from important people?</strong><br />
+Some characters aren’t in every story, but when they show up, it’s because someone important is talking about them or dealing with them. For example, Hades might not have the most connections, but he’s mentioned by many important characters like Zeus and Persephone. He’s central because he’s mentioned or visited by characters who matter a lot, even if he doesn’t leave the Underworld often.</p>
+    </blockquote>
+  </li>
+</ol>
+
+<p class="notice--info"><strong>Note</strong>: If you are new to these concepts it might get confusing and you might start mixing them up. Therefore, as we will come across these concepts throughout the project, if you don’t remember what each one means, just hover over the terms in the text and a tooltip will appear with a brief reminder. For example, if you hover over <span title="Who interacts with the most people?"><strong>Degree centrality</strong></span>, you will see a tooltip explaining that it represents who interacts with the most people.</p>
+
+<h2 id="defining-relationships">Defining Relationships</h2>
+
+<p>To analyze the relationships between characters, we need to define what constitutes a relationship for the purposes of this project. Relationships can be complex and multifaceted, but for our purposes, we will focus only on the co-occurrences of characters within the same narrative context. This means that if two characters appear within a specified number of sentences in the same myth or story, they will be considered connected. It is the most common way to define relationships in network analysis, especially when dealing with large text corpora where explicit relationships may not be clearly stated.</p>
+
+<p>Now there is a bias in this approach, as we are going to use different genres of texts each with its own narrative style and structure. For example, tragedies and epic poetry like the “Iliad” or “Odyssey” may have a large number of connections for the lead characters compared to a small Homeric Hymn. This will cause the characters in long texts to dominate the connections in the network and would give these characters an unfair advantage. One way to mitigate this bias is by applying a weight to the extracted relationships in the texts.</p>
+
+<p>Generally, in network analysis, weighting relationships allows us to differentiate between strong and weak connections. For example, a connection between family members may be considered stronger than a connection between acquaintances. However, this is not generally necessary and it depends completely on the type of analysis you want to perform. In our case, it will be a useful tool to balance the relationships extracted from different texts, especially when dealing with texts of varying lengths and narrative styles. I will consider each “myth” as a full narrative unit regardless of its length and the relationships between the characters will be normalized by the number of total relationships in that myth. This way, we can ensure that characters from shorter texts are not unfairly overshadowed by those from longer texts. For example, in the Illiad, a connection between Achilles and Hector will be weighted by the number of total connections between all characters in the text (which might be in the thousands), so that it does not dominate the network simply because the text is longer. Additionally, I applied a log transformation to keep the network balanced and to avoid the influence of outliers while preserving the order of the centrality ranks. The log “compresses” those outliers, so no single pair overwhelms the rest of the network. This makes it easier to see meaningful relationships across all texts, not just the loudest ones.</p>
+
+<p>For those who want their math fix, the formula for the final weighted relationship between two characters A and B:
+<a name="eq-weights"></a></p>
+
+\[\text{W}_{ij} = \log\left(1 + \sum_t \frac{c_{ij}^{(t)}}{C^{(t)}} \right)\]
+
+<p>where:</p>
+<ul>
+  <li>\(W_{ij}\) is the final weight of the relationship between characters \(i\) and \(j\) in all texts,</li>
+  <li>\(c_{ij}^{(t)}\) is the number of co-occurrences between characters \(i\) and \(j\) in text \(t\),</li>
+  <li>\(C^{(t)}\) is the total number of co-occurrences of all character pairs in myth \(t\).</li>
+</ul>
+
+<p><br /></p>
+
+<h1 id="data-collection">Data Collection</h1>
+
+<p>While the myths are culturally ubiquitous, the data isn’t. Most of these stories live in unstructured, messy texts, scattered across classical literature websites. Luckily we can find a good collection of English translations of primary sources on the <a href="https://www.theoi.com/Library.html" target="_blank" rel="noopener noreferrer">Theoi.com library</a>. This site is a treasure trove of mythological texts, including epic poetry, tragedies, and other narratives. However, the data is not structured in a way that makes it easy to extract. Therefore, it was necessary to scrape the text from the site and parse it into smaller narrative units (which was not that pleasant).</p>
+
+<h2 id="text-corpus">Text Corpus</h2>
+
+<p>I used <a href="https://www.crummy.com/software/BeautifulSoup/bs4/doc/" target="_blank" rel="noopener noreferrer">Beautiful Soup</a> to first scrape a list of available texts in the Theoi library along with their metadata (URLs, author names, time period, original language). Then I built a crawler to scrape the text of each item from the list while excluding nonprimary sources (I’m looking at you <a href="https://en.wikipedia.org/wiki/John_Tzetzes" target="_blank" rel="noopener noreferrer">Tzetzes</a>!). Due to the structure of the Theoi library, the texts were not organized in a straightforward manner, so I had to have the crawler navigate through multiple levels of links to reach the full parts of every text and store each text in a txt file. The crawler was designed to handle pagination and nested links, ensuring that all relevant texts were collected. Additionally, when a table of contents was present, the crawler would follow the links to each section and store the title of each section in a JSON file, allowing for a more organized dataset.</p>
+
+<p>The text files were then imported and split based on the possible unique structures of the texts (some have sections with Roman numerals, some with Arabic numerals, some with titles and some without, some have a title only in the table of contents, etc.). I built a clean and structured dataset of mythological texts, where each entry corresponds to the smallest possible division of a text (e.g., one myth, or one book section). I also classified each text based on whether it’s an Epic, dialogue (tragedy or comedy), or other. The dataset is comprised of 1441 entries. Here is an example of how the dataset looks like:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>index</th>
+      <th>author</th>
+      <th>title</th>
+      <th>url</th>
+      <th>language</th>
+      <th>period</th>
+      <th>years</th>
+      <th>text</th>
+      <th>chapter</th>
+      <th>genre</th>
+      <th>section</th>
+      <th>myth</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>54</td>
+      <td>Homer</td>
+      <td>Illiad</td>
+      <td>https://www.theoi.com/Text/HomerIliad1.html</td>
+      <td>Greek</td>
+      <td>Archaic</td>
+      <td>800 B.C. - 500 B.C.</td>
+      <td>And the son of Atreus, Menelaus, dear to Ares,…</td>
+      <td>17</td>
+      <td>Epic</td>
+      <td>None</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <td>195</td>
+      <td>Apollodorus</td>
+      <td>The Library</td>
+      <td>https://www.theoi.com/Text/Apollodorus1.html</td>
+      <td>Greek</td>
+      <td>Hellenistic</td>
+      <td>300 B.C. - 100 B.C.</td>
+      <td>Reigning over Calydon, Oeneus was the first who received…</td>
+      <td>1</td>
+      <td>Other</td>
+      <td>8</td>
+      <td>Oeneus, Meleager, Tydeus</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="character-dataset">Character dataset</h2>
+
+<p>To identify co-occurrences in the texts, we need to be able to correctly recognize the characters. The problem with using Named Entity Recognition (NER) is that it is not always accurate, especially with mythological characters. Many characters have multiple names or epithets, and some characters are not recognized by NER models at all as these tools are not really trained on such texts. Therefore, I decided to use a curated list of mythological characters from <a href="https://www.wikidata.org/" target="_blank" rel="noopener noreferrer">Wikidata</a> as a reference.</p>
+
+<p>I queried the database to extract all the instances of the <a href="https://www.wikidata.org/wiki/Q22988604" target="_blank" rel="noopener noreferrer">mythological Greek character</a> class and to recursively extract all the instances of its subclasses along with some of their metadata that might be useful (name, aliases, Roman name, Roman aliases, domain, gender, siteLinkCount, etc.). This resulted in a huge dataset of over 6000 Greek mythological characters. Each of these characters also has a list of aliases. The problem with this is there will be multiple characters with the same name or alias which will cause problems when trying to identify co-occurrences in the texts. So I had to deduplicate the dataset by only keeping one character per name or alias. I did this by keeping the character that is more “important” by giving each character an importance score. This score is calculated based on the presence of a <a href="https://www.theoi.com" target="_blank" rel="noopener noreferrer">Theoi.com</a> page for the character (characters with a page are more important), and the siteLinkCount<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup> (characters with a higher siteLinkCount are more important). After removing all the duplicate names, I was left with a final dataset containing 1076 unique characters, each with their metadata and aliases. Here is an example of how the dataset looks like:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>id</th>
+      <th>name</th>
+      <th>description</th>
+      <th>type</th>
+      <th>domain</th>
+      <th>gender</th>
+      <th>aliases</th>
+      <th>residence</th>
+      <th>theoi_url</th>
+      <th>level1</th>
+      <th>level2</th>
+      <th>level3</th>
+      <th>level4</th>
+      <th>level5</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Q174278</td>
+      <td>Medea</td>
+      <td>daughter of King Aeëtes of Colchis</td>
+      <td>Mythological Greek Character</td>
+      <td> </td>
+      <td>female</td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td>Mythological Greek Character</td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Q37340</td>
+      <td>Apollo</td>
+      <td>god in Greek and later Roman mythology</td>
+      <td>Olympian god</td>
+      <td> </td>
+      <td>male</td>
+      <td>Apollōn, Aploun,  Apellōn,  Apeilōn,  Phoebus, Apollon, Mogounos, Mogons</td>
+      <td>Olympus</td>
+      <td>https://www.theoi.com/Olympios/Apollon.html</td>
+      <td>Mythological Greek Character</td>
+      <td>Greek deity</td>
+      <td>Olympian god</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Q420269</td>
+      <td>Arges</td>
+      <td>cyclops in Greek mythology</td>
+      <td>cyclops</td>
+      <td> </td>
+      <td>male</td>
+      <td>Pyraemon, Acmonides</td>
+      <td> </td>
+      <td> </td>
+      <td>Mythological Greek Character</td>
+      <td>cyclops</td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<p><br /></p>
+
+<h1 id="nodes-and-edges-extraction">Nodes and edges extraction</h1>
+
+<p>Now that we have the text corpus and the character dataset, we can extract the relationships between characters. I used <a href="https://spacy.io/" target="_blank" rel="noopener noreferrer">spaCy</a>, a powerful NLP library, to process the text and identify character mentions. I created a custom pipeline that uses the character dataset to recognize mentions of characters in the text and would resolve any alias to the canonical name of the character. This way, we can ensure that all mentions of a character are correctly identified, regardless of the name or alias used in the text. I set a 2 sentence window to identify co-occurrences, meaning that if two characters appear within 2 sentences of each other<sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup>, they will be considered connected.</p>
+
+<p>Additionally, for dialogue-type texts, I used additional criteria to identify relationships. If a character is mentioned within the speech of another character, they will be considered connected. This is particularly useful for tragedies and comedies where characters often speak about or address each other directly. I also considered each consecutive speaker to be connected to the previous speaker, as they are part of the same dialogue exchange. This allows us to capture the dynamics of conversations and interactions between characters in a more nuanced way.</p>
+
+<p>After going through the entire text corpus with <a href="https://spacy.io/" target="_blank" rel="noopener noreferrer">spaCy</a>, I was able to extract a list of character pairs with their co-occurrences. For a network analysis, we need an edges and nodes datasets. For the edges dataset, I normalized the relationships as described in the <a href="#eq-weights">weighting formula</a> based on the total number of co-occurrences in each myth (or the smallest available division of text). This resulted in a final dataset of character relationships, where each entry represents a unique connection between two characters along with its weight. The resulting dataset contains 48,414 unique relationships between characters. For the nodes dataset, I simply used the characters in the character dataset that appear in the edges dataset, along with their metadata. The final nodes dataset contains 943 unique characters.</p>
+
+<hr />
+
+<p><br />
+This concludes the data-gathering and information-extraction process. In the next part, we will analyze the network structure and try to find answers to our initial questions. We will explore the centrality measures we defined earlier and see what patterns and relationships they reveal within the mythological universe.</p>
+
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1" role="doc-endnote">
+      <p>The number of links to the character from other Wikidata pages. A higher number of links indicates that the character is more important or more frequently referenced in other contexts. <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:2" role="doc-endnote">
+      <p>The choice of a 2 sentence window is somewhat arbitrary. A 3-5 sentence window is usually more common but it is mainly used when analyzing a network with a much smaller number of texts. In this project, I considered a 2 sentence window as it would be a bit more conservative than the more common 3-5 sentence window, but more flexible than a single-sentence window. <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2025-06-15T00:00:00+02:00">June 15, 2025</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  <h4 class="page__share-title">Share on</h4>
+
+  <a href="https://twitter.com/intent/tweet?text=Mapping+the+Mythos%3A+Part+I%20https%3A%2F%2Fquantifiedcuriosities.com%2Fposts%2Fgreek-myth-network1%2F" class="btn btn--twitter" aria-label="Share on X" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on X">
+    <i class="fab fa-fw fa-x-twitter" aria-hidden="true"></i><span> X</span>
+  </a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fquantifiedcuriosities.com%2Fposts%2Fgreek-myth-network1%2F" class="btn btn--facebook" aria-label="Share on Facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook">
+    <i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span>
+  </a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://quantifiedcuriosities.com/posts/greek-myth-network1/" class="btn btn--linkedin" aria-label="Share on LinkedIn" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn">
+    <i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span>
+  </a>
+
+  <a href="https://bsky.app/intent/compose?text=Mapping+the+Mythos%3A+Part+I%20https%3A%2F%2Fquantifiedcuriosities.com%2Fposts%2Fgreek-myth-network1%2F" class="btn btn--bluesky" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Bluesky">
+    <i class="fab fa-fw fa-bluesky" aria-hidden="true"></i><span> Bluesky</span>
+  </a>
+
+  <a href="https://www.reddit.com/submit?url=https%3A%2F%2Fquantifiedcuriosities.com%2Fposts%2Fgreek-myth-network1%2F&title=Mapping the Mythos: Part I" class="btn btn--reddit" aria-label="Share on Reddit" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Reddit"><i class="fab fa-fw fa-reddit" aria-hidden="true"></i><span> Reddit</span>
+  </a>
+
+</section>
+
+
+      
+
+    </div>
+
+    
+      
+        <div class="page__comments">
+  
+  
+      <div class="page__comments">
+    <h4 class="page__comments-title">Discussion</h4>
+    <div id="cusdis_thread"
+          data-host="https://34.74.79.29.nip.io"
+          data-app-id="dcfefdac-f7f9-45a8-8758-cf7c7edd654b"
+          data-page-id="/posts/greek-myth-network1"
+          data-page-url="https://quantifiedcuriosities.com/posts/greek-myth-network1/"
+          data-page-title="Mapping the Mythos: Part I"
+          data-theme="auto">
+    </div>
+</div>
+
+<script>
+
+  (function() {
+    const savedFile = localStorage.getItem('preferred-theme-file');
+    const div = document.getElementById('cusdis_thread');
+    if (!div) return;
+
+    const mode = savedFile && savedFile.includes('dark') ? 'dark' : 'light';
+
+    div.setAttribute('data-theme', mode);
+
+  })();
+</script>
+
+<script async defer src="https://34.74.79.29.nip.io/js/cusdis.es.js"></script>
+
+
+  
+</div>
+
+      
+    
+  </article>
+
+  
+  
+    
+<div class="page__related">
+  
+  <h2 class="page__related-title">You May Also Enjoy</h2>
+  <div class="grid__wrapper">
+    
+      
+  </div>
+</div>
+
+  
+</div>
+
+      
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+          <li><a href="mailto:elie.j.maalouly@email.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+        
+      
+        
+          <li><a href="https://github.com/eliemaalouly" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://www.linkedin.com/in/elie-maalouly/" rel="nofollow noopener noreferrer"><i class="fa-brands fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2025 <a href="https://quantifiedcuriosities.com">Quantified Curiosities</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    <!-- start custom comments scripts -->
+
+<!-- end custom comments scripts -->
+
+
+
+
+
+  </body>
+</html>
