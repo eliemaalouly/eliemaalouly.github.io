@@ -1,0 +1,44 @@
+name: Build and Deploy Jekyll
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+
+    env:
+      ENV_CONFIG: ${{ secrets.ENV_CONFIG }}
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.1'
+
+      - name: Install dependencies
+        run: |
+          gem install bundler
+          bundle install
+
+      - name: Create env-config.js
+        run: |
+          mkdir -p assets/js
+          echo "window.env = $ENV_CONFIG;" > assets/js/env-config.js
+
+      - name: Build Jekyll site (production)
+        run: |
+          export JEKYLL_ENV=production
+          bundle exec jekyll build
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.PERSONAL_TOKEN }}
+          publish_dir: ./_site
+          publish_branch: gh-pages

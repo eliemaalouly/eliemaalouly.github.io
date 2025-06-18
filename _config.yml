@@ -1,0 +1,138 @@
+# Site settings
+remote_theme: mmistakes/minimal-mistakes
+minimal_mistakes_skin: "dirt"
+locale: "en"
+title: "Quantified Curiosities"
+short_title: "Q.C."
+logo: "/assets/images/logo/logo-light.png"
+teaser: /assets/images/home/teaser.png
+name: "Elie Maalouly"
+email: "elie.j.maalouly@gmail.com"
+description: "Finding clarity in the things no one asked to be clarified."
+baseurl: ""
+url: "https://quantifiedcuriosities.com"
+github_username:  eliemaalouly
+enable_copy_code_button: true
+search: true
+search_provider: lunr
+lunr:
+  search_within_pages: true
+comments:
+  provider: custom
+
+
+# Analytics
+# handled in _includes/head/custom.html
+
+
+# Outputting
+permalink: /:categories/:title/
+timezone: Europe/Rome
+
+
+# Plugins
+plugins:
+  - jekyll-paginate-v2
+  - jekyll-sitemap
+  - jekyll-gist
+  - jekyll-feed
+  - jemoji
+  - jekyll-include-cache
+
+
+# Pagination with jekyll-paginate-v2
+pagination:
+  enabled: true
+  collection: 'posts'
+  per_page: 10
+  permalink: '/page/:num/'
+  title: ':title - page :num'
+  limit: 0
+  sort_field: 'date'
+  sort_reverse: true
+  trail:
+    before: 2
+    after: 2
+    
+
+include:
+  - _pages
+exclude:
+  - README.md
+  - LICENSE*
+encoding: "utf-8"
+markdown_ext: "markdown,mkdown,mkdn,mkd,md"
+
+
+# Site Author
+author:
+  name             : "Elie Maalouly"
+  avatar           : "/assets/images/misc/bio-photo.png"
+  # bio              : "I am an **amazing** person."
+  location         : "Naples, Italy"
+  links:
+    - label: "Email"
+      icon: "fas fa-fw fa-envelope-square"
+      url: "mailto:elie.j.maalouly@email.com"
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/eliemaalouly"
+    - label: "LinkedIn"
+      icon: "fa-brands fa-linkedin"
+      url: "https://www.linkedin.com/in/elie-maalouly/"
+
+
+# Site Footer
+footer:
+  links:
+    - label: "Email"
+      icon: "fas fa-fw fa-envelope-square"
+      url: "mailto:elie.j.maalouly@email.com"
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/eliemaalouly"
+    - label: "LinkedIn"
+      icon: "fa-brands fa-linkedin"
+      url: "https://www.linkedin.com/in/elie-maalouly/"
+
+
+# Conversion
+markdown: kramdown
+highlighter: rouge
+excerpt_separator: "\n\n"
+
+
+# Sass/SCSS
+sass:
+  sass_dir: _sass
+  style: compressed
+
+
+# Defaults
+defaults:
+  # _posts
+  - scope:
+      path: ""
+      type: posts
+    values:
+      show_date: true
+      layout: single
+      author_profile: false
+      read_time: true
+      words_per_minute: 150
+      permalink: /posts/:title/
+      mathjax: true
+      comments: true
+      share: true
+      related: true
+      toc: true
+      toc_label: " On This Page"
+      toc_sticky: true
+      toc_icon: "fa-solid fa-list-ul"
+  # _pages
+  - scope:
+      path: ""
+      type: pages
+    values:
+      layout: single
+      classes: masthead-relative

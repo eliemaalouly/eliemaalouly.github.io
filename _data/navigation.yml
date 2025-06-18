@@ -1,0 +1,19 @@
+# main links
+main:
+  - title: "Home"
+    url: /
+  - title: "Posts"
+    url: /posts/
+  - title: "About"
+    url: /about/
+  - title: "Privacy Policy"
+    url: /privacy-policy/
+
+
+greek-myth-network:
+  - title: "Mapping the Mythos"
+    children:
+      - title: "Part I"
+        url: /posts/greek-myth-network1/
+      - title: "Part II"
+        url: /posts/greek-myth-network2/

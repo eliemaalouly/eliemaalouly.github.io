@@ -1,0 +1,7 @@
+_site
+.vscode
+.sass-cache
+.jekyll-metadata
+Gemfile.lock
+.ENV_CONFIG
+assets/js/env-config.js

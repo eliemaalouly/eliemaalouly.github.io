@@ -1,0 +1,39 @@
+<div class="page__comments">
+    <h4 class="page__comments-title">Discussion</h4>
+    <div id="cusdis_thread"
+          data-host=""
+          data-app-id=""
+          data-page-id="{{ page.id | default: page.url }}"
+          data-page-url="{{ page.url | absolute_url }}"
+          data-page-title="{{ page.title }}"
+          data-theme="auto">
+    </div>
+</div>
+
+<script>
+
+  (function() {
+    const savedFile = localStorage.getItem('preferred-theme-file');
+    const div = document.getElementById('cusdis_thread');
+    if (!div) return;
+
+    const mode = savedFile && savedFile.includes('dark') ? 'dark' : 'light';
+
+    div.setAttribute('data-theme', mode);
+
+  })();
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    if (window.env && window.env.cusdis.url) {
+      const script = document.createElement("script");
+      script.src = window.env.cusdis.url + "/js/cusdis.es.js";
+      script.async = true;
+      script.defer = true;
+      document.body.appendChild(script);
+    }
+  });
+</script>
+
+

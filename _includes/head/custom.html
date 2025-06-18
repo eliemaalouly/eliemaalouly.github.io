@@ -1,0 +1,119 @@
+<link rel="icon" type="image/svg+xml" href="/assets/images/favicon/favicon.svg" />
+
+<link rel="icon" type="image/png" href="/assets/images/favicon/favicon-96x96.png" sizes="96x96" />
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/images/favicon/apple-touch-icon.png" />
+<link rel="manifest" href="/assets/images/favicon/site.webmanifest" />
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+<script>
+  (function () {
+    const preferred = localStorage.getItem('preferred-theme-file');
+    const themeFile = preferred || 'light.css';
+    const theme = themeFile.includes('dark') ? 'dark' : 'light';
+
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = '/assets/css/' + themeFile;
+    link.id = 'theme-stylesheet';
+    document.head.appendChild(link);
+
+    document.documentElement.setAttribute('data-theme', theme);
+  })();
+</script>
+
+<script src="{{ '/assets/js/theme-toggle.js' | relative_url }}"></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js"></script>
+
+<script src="{{ '/assets/js/masthead-scroll.js' | relative_url }}"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-check-compat.js"></script>
+
+<script src="/assets/js/env-config.js"></script>
+
+<script>
+  window.addEventListener('DOMContentLoaded', function () {
+    const firebaseConfig = window.env.firebase;
+
+    firebase.initializeApp(firebaseConfig);
+
+    firebase.appCheck().activate(
+      firebaseConfig.appCheckKey,
+      true
+    );
+  });
+</script>
+
+<script src="{{ '/assets/js/easter-egg.js' | relative_url }}"></script>
+
+<script>
+  window.addEventListener("load", function () {
+
+    var cc = window.cookieconsent.initialise({
+      palette: {
+        popup: { background: "#000" },
+        button: { background: "#f1d600", text: "#000" }
+      },
+      theme: "edgeless",
+      type: "opt-in",
+      content: {
+        message: "We use cookies for analytics. Do you accept?",
+        dismiss: "Accept",
+        deny: "Decline",
+        link: "Learn more",
+        href: "/privacy-policy/"
+      },
+
+      onInitialise: function (status) {
+        if (this.hasConsented()) {
+          console.log("CookieConsent: initial consent granted");
+          loadAnalytics();
+        } else {
+          console.log("CookieConsent: initial consent denied");
+        }
+      },
+
+      onStatusChange: function (status, chosenBefore) {
+        if (this.hasConsented()) {
+          console.log("CookieConsent: status changed to granted");
+          loadAnalytics();
+        } else {
+          console.log("CookieConsent: status changed to denied");
+        }
+      }
+    });
+
+    function loadAnalytics() {
+      if (window.GA_LOADED) return;
+      window.GA_LOADED = true;
+      console.log("Loading Google Analytics…");
+
+      var s = document.createElement('script');
+      s.src = "https://www.googletagmanager.com/gtag/js?id=G-3L16HRLCNP";
+      s.async = true;
+      document.head.appendChild(s);
+
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', 'G-3L16HRLCNP', { anonymize_ip: true });
+    }
+  });
+</script>
+
+<script>
+  window.addEventListener("DOMContentLoaded", () => {
+    const thread = document.getElementById("cusdis_thread");
+    if (thread && window.env) {
+      thread.setAttribute("data-host", window.env.cusdis.url);
+      thread.setAttribute("data-app-id", window.env.cusdis.app_id);
+    }
+  });
+</script>
