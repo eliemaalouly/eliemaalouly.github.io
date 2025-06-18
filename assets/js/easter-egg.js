@@ -123,7 +123,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const wordIndex = Math.floor(Math.random() * words.length);
     const targetWord = words[wordIndex];
-    console.log(`Here let me make it easy for you! The egg is behind the word: "${targetWord}" in paragraph ${randomIndex} at index ${wordIndex} (I know, I know! It's still not that easy to find sometimes)`);
+    // console.log(`Here let me make it easy for you! The egg is behind the word: "${targetWord}" in paragraph ${randomIndex} at index ${wordIndex} (I know, I know! It's still not that easy to find sometimes)`);
 
     let wordStartIndex = -1;
     let matchCount = 0;

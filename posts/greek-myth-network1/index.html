@@ -1,4 +1,426 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="https://quantifiedcuriosities.com/feed.xml" rel="self" type="application/atom+xml" /><link href="https://quantifiedcuriosities.com/" rel="alternate" type="text/html" /><updated>2025-06-18T20:35:51+02:00</updated><id>https://quantifiedcuriosities.com/feed.xml</id><title type="html">Quantified Curiosities</title><subtitle>Finding clarity in the things no one asked to be clarified.</subtitle><author><name>Elie Maalouly</name></author><entry><title type="html">Mapping the Mythos: Part I</title><link href="https://quantifiedcuriosities.com/posts/greek-myth-network1/" rel="alternate" type="text/html" title="Mapping the Mythos: Part I" /><published>2025-06-18T00:00:00+02:00</published><updated>2025-06-18T00:00:00+02:00</updated><id>https://quantifiedcuriosities.com/posts/greek-myth-network1</id><content type="html" xml:base="https://quantifiedcuriosities.com/posts/greek-myth-network1/"><![CDATA[<p>In this two-part series, we will explore the fascinating world of Greek mythology through the lens of network analysis. By examining the relationships between characters, we can uncover hidden patterns and insights about the mythological universe and the people who wrote them. In Part I, we will focus on the data gathering and information extraction process, while Part II will delve into the analysis of the central figures and their roles within the narrative structure. The code for this project is available on <a href="https://github.com/eliemaalouly/greek-myth-network" target="_blank" rel="noopener noreferrer">GitHub</a>.</p>
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.1 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Mapping the Mythos: Part I - Quantified Curiosities</title>
+<meta name="description" content="In this two-part series, we will explore the fascinating world of Greek mythology through the lens of network analysis. By examining the relationships between characters, we can uncover hidden patterns and insights about the mythological universe and the people who wrote them. In Part I, we will focus on the data gathering and information extraction process, while Part II will delve into the analysis of the central figures and their roles within the narrative structure. The code for this project is available on GitHub.">
+
+
+  <meta name="author" content="Elie Maalouly">
+  
+  <meta property="article:author" content="Elie Maalouly">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en">
+<meta property="og:site_name" content="Quantified Curiosities">
+<meta property="og:title" content="Mapping the Mythos: Part I">
+<meta property="og:url" content="https://quantifiedcuriosities.com/posts/greek-myth-network1/">
+
+
+  <meta property="og:description" content="In this two-part series, we will explore the fascinating world of Greek mythology through the lens of network analysis. By examining the relationships between characters, we can uncover hidden patterns and insights about the mythological universe and the people who wrote them. In Part I, we will focus on the data gathering and information extraction process, while Part II will delve into the analysis of the central figures and their roles within the narrative structure. The code for this project is available on GitHub.">
+
+
+
+  <meta property="og:image" content="https://quantifiedcuriosities.com/assets/images/posts/greek-myth-network1/hero.png">
+
+
+
+
+
+  <meta property="article:published_time" content="2025-06-18T00:00:00+02:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://quantifiedcuriosities.com/posts/greek-myth-network1/">
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Quantified Curiosities Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  window.enable_copy_code_button = true;
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <link rel="icon" type="image/svg+xml" href="/assets/images/favicon/favicon.svg" />
+
+<link rel="icon" type="image/png" href="/assets/images/favicon/favicon-96x96.png" sizes="96x96" />
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/images/favicon/apple-touch-icon.png" />
+<link rel="manifest" href="/assets/images/favicon/site.webmanifest" />
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+<script>
+  (function () {
+    const preferred = localStorage.getItem('preferred-theme-file');
+    const themeFile = preferred || 'light.css';
+    const theme = themeFile.includes('dark') ? 'dark' : 'light';
+
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = '/assets/css/' + themeFile;
+    link.id = 'theme-stylesheet';
+    document.head.appendChild(link);
+
+    document.documentElement.setAttribute('data-theme', theme);
+  })();
+</script>
+
+<script src="/assets/js/theme-toggle.js"></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js"></script>
+
+<script src="/assets/js/masthead-scroll.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-check-compat.js"></script>
+
+<script src="/assets/js/env-config.js"></script>
+
+<script>
+  window.addEventListener('DOMContentLoaded', function () {
+    const firebaseConfig = window.env.firebase;
+
+    firebase.initializeApp(firebaseConfig);
+
+    firebase.appCheck().activate(
+      firebaseConfig.appCheckKey,
+      true
+    );
+  });
+</script>
+
+<script src="/assets/js/easter-egg.js"></script>
+
+<script>
+  window.addEventListener("load", function () {
+
+    var cc = window.cookieconsent.initialise({
+      palette: {
+        popup: { background: "#000" },
+        button: { background: "#f1d600", text: "#000" }
+      },
+      theme: "edgeless",
+      type: "opt-in",
+      content: {
+        message: "We use cookies for analytics. Do you accept?",
+        dismiss: "Accept",
+        deny: "Decline",
+        link: "Learn more",
+        href: "/privacy-policy/"
+      },
+
+      onInitialise: function (status) {
+        if (this.hasConsented()) {
+          console.log("CookieConsent: initial consent granted");
+          loadAnalytics();
+        } else {
+          console.log("CookieConsent: initial consent denied");
+        }
+      },
+
+      onStatusChange: function (status, chosenBefore) {
+        if (this.hasConsented()) {
+          console.log("CookieConsent: status changed to granted");
+          loadAnalytics();
+        } else {
+          console.log("CookieConsent: status changed to denied");
+        }
+      }
+    });
+
+    function loadAnalytics() {
+      if (window.GA_LOADED) return;
+      window.GA_LOADED = true;
+      console.log("Loading Google Analytics…");
+
+      var s = document.createElement('script');
+      s.src = "https://www.googletagmanager.com/gtag/js?id=G-3L16HRLCNP";
+      s.async = true;
+      document.head.appendChild(s);
+
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', 'G-3L16HRLCNP', { anonymize_ip: true });
+    }
+  });
+</script>
+
+<script>
+  window.addEventListener("DOMContentLoaded", () => {
+    const thread = document.getElementById("cusdis_thread");
+    if (thread && window.env) {
+      thread.setAttribute("data-host", window.env.cusdis.url);
+      thread.setAttribute("data-app-id", window.env.cusdis.app_id);
+    }
+  });
+</script>
+  </head>
+
+  <body class="layout--single justified-post" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="/">
+            <span class="site-logo--mobile">
+            <img id="site-logo" src="/assets/images/logo/logo-light.png" alt="Quantified Curiosities"></a>
+            </span>
+        
+        <div style="display: flex; align-items: center; gap: 1rem;">
+  <a class="site-title" href="/">
+    <span class="site-title--desktop">
+    Quantified Curiosities
+  </span>
+  <span class="site-title--mobile">
+    Q.C.
+  </span>
+    
+  </a>
+</div>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/"
+                
+                
+              >Home</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/posts/"
+                
+                
+              >Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/about/"
+                
+                
+              >About</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/privacy-policy/"
+                
+                
+              >Privacy Policy</a>
+            </li></ul>
+        <button id="theme-toggle" aria-label="Toggle theme" title="Switch theme"
+          style="background: none; border: none; cursor: pointer;">
+    <span id="theme-icon"></span>
+  </button>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+  
+
+
+
+
+
+
+
+
+
+
+
+<div class="page__hero--overlay"
+  style="
+    
+    
+      background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/assets/images/posts/greek-myth-network1/hero.png');
+      background-position: top center;
+    
+    
+      min-height: 36vw;
+    
+    
+      max-height: 72vw;
+    
+  ">
+
+  
+    <div class="wrapper">
+      <h1 id="page-title" class="page__title" itemprop="headline">
+        
+          Mapping the Mythos: Part I
+
+        
+      </h1>
+      
+        <p class="page__lead">Assembling the Cast of Gods, Heroes and Monsters
+</p>
+      
+      
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2025-06-18T00:00:00+02:00">June 18, 2025</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          19 minute read
+        
+      </span>
+    
+  </p>
+
+
+      
+    </div>
+  
+  
+</div>
+
+
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+  
+    
+      
+      
+      
+      
+    
+    
+      <nav class="nav__list">
+  
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">Toggle Menu</label>
+  <ul class="nav__items">
+    
+      
+      
+        <li>
+          
+            <span class="nav__sub-title">Mapping the Mythos</span>
+          
+
+          
+          <ul>
+            
+              <li><a href="/posts/greek-myth-network1/" class="active">Part I</a></li>
+            
+              <li><a href="/posts/greek-myth-network2/">Part II</a></li>
+            
+          </ul>
+          
+        </li>
+      
+    
+  </ul>
+</nav>
+
+    
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Mapping the Mythos: Part I">
+    <meta itemprop="description" content="In this two-part series, we will explore the fascinating world of Greek mythology through the lens of network analysis. By examining the relationships between characters, we can uncover hidden patterns and insights about the mythological universe and the people who wrote them. In Part I, we will focus on the data gathering and information extraction process, while Part II will delve into the analysis of the central figures and their roles within the narrative structure. The code for this project is available on GitHub.">
+    <meta itemprop="datePublished" content="2025-06-18T00:00:00+02:00">
+    
+
+    <div class="page__inner-wrap">
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-fa-solid fa-scroll"></i>  On This Page</h4></header>
+              <ul class="toc__menu"><li><a href="#introduction">Introduction</a></li><li><a href="#methodology">Methodology</a><ul><li><a href="#centrality-in-networks">Centrality in Networks</a></li><li><a href="#defining-relationships">Defining Relationships</a></li></ul></li><li><a href="#data-collection">Data Collection</a><ul><li><a href="#text-corpus">Text Corpus</a></li><li><a href="#character-dataset">Character dataset</a></li></ul></li><li><a href="#nodes-and-edges-extraction">Nodes and edges extraction</a></li></ul>
+            </nav>
+          </aside>
+        
+        <p>In this two-part series, we will explore the fascinating world of Greek mythology through the lens of network analysis. By examining the relationships between characters, we can uncover hidden patterns and insights about the mythological universe and the people who wrote them. In Part I, we will focus on the data gathering and information extraction process, while Part II will delve into the analysis of the central figures and their roles within the narrative structure. The code for this project is available on <a href="https://github.com/eliemaalouly/greek-myth-network" target="_blank" rel="noopener noreferrer">GitHub</a>.</p>
 
 <p><br /></p>
 
@@ -242,4 +664,190 @@ This concludes the data-gathering and information-extraction process. In the nex
       <p>The choice of a 2 sentence window is somewhat arbitrary. A 3-5 sentence window is usually more common but it is mainly used when analyzing a network with a much smaller number of texts. In this project, I considered a 2 sentence window as it would be a bit more conservative than the more common 3-5 sentence window, but more flexible than a single-sentence window. <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>
-</div>]]></content><author><name>Elie Maalouly</name></author><summary type="html"><![CDATA[In this two-part series, we will explore the fascinating world of Greek mythology through the lens of network analysis. By examining the relationships between characters, we can uncover hidden patterns and insights about the mythological universe and the people who wrote them. In Part I, we will focus on the data gathering and information extraction process, while Part II will delve into the analysis of the central figures and their roles within the narrative structure. The code for this project is available on GitHub.]]></summary></entry></feed>
+</div>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2025-06-18T00:00:00+02:00">June 18, 2025</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  <h4 class="page__share-title">Share on</h4>
+
+  <a href="https://twitter.com/intent/tweet?text=Mapping+the+Mythos%3A+Part+I%20https%3A%2F%2Fquantifiedcuriosities.com%2Fposts%2Fgreek-myth-network1%2F" class="btn btn--twitter" aria-label="Share on X" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on X">
+    <i class="fab fa-fw fa-x-twitter" aria-hidden="true"></i><span> X</span>
+  </a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fquantifiedcuriosities.com%2Fposts%2Fgreek-myth-network1%2F" class="btn btn--facebook" aria-label="Share on Facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook">
+    <i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span>
+  </a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://quantifiedcuriosities.com/posts/greek-myth-network1/" class="btn btn--linkedin" aria-label="Share on LinkedIn" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn">
+    <i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span>
+  </a>
+
+  <a href="https://bsky.app/intent/compose?text=Mapping+the+Mythos%3A+Part+I%20https%3A%2F%2Fquantifiedcuriosities.com%2Fposts%2Fgreek-myth-network1%2F" class="btn btn--bluesky" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Bluesky">
+    <i class="fab fa-fw fa-bluesky" aria-hidden="true"></i><span> Bluesky</span>
+  </a>
+
+  <a href="https://www.reddit.com/submit?url=https%3A%2F%2Fquantifiedcuriosities.com%2Fposts%2Fgreek-myth-network1%2F&title=Mapping the Mythos: Part I" class="btn btn--reddit" aria-label="Share on Reddit" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Reddit"><i class="fab fa-fw fa-reddit" aria-hidden="true"></i><span> Reddit</span>
+  </a>
+
+</section>
+
+
+      
+
+    </div>
+
+    
+      
+        <div class="page__comments">
+  
+  
+      <div class="page__comments">
+    <h4 class="page__comments-title">Discussion</h4>
+    <div id="cusdis_thread"
+          data-host=""
+          data-app-id=""
+          data-page-id="/posts/greek-myth-network1"
+          data-page-url="https://quantifiedcuriosities.com/posts/greek-myth-network1/"
+          data-page-title="Mapping the Mythos: Part I"
+          data-theme="auto">
+    </div>
+</div>
+
+<script>
+
+  (function() {
+    const savedFile = localStorage.getItem('preferred-theme-file');
+    const div = document.getElementById('cusdis_thread');
+    if (!div) return;
+
+    const mode = savedFile && savedFile.includes('dark') ? 'dark' : 'light';
+
+    div.setAttribute('data-theme', mode);
+
+  })();
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    if (window.env && window.env.cusdis.url) {
+      const script = document.createElement("script");
+      script.src = window.env.cusdis.url + "/js/cusdis.es.js";
+      script.async = true;
+      script.defer = true;
+      document.body.appendChild(script);
+    }
+  });
+</script>
+
+
+
+  
+</div>
+
+      
+    
+  </article>
+
+  
+  
+    
+<div class="page__related">
+  
+  <h2 class="page__related-title">You May Also Enjoy</h2>
+  <div class="grid__wrapper">
+    
+      
+  </div>
+</div>
+
+  
+</div>
+
+      
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+          <li><a href="mailto:elie.j.maalouly@email.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+        
+      
+        
+          <li><a href="https://github.com/eliemaalouly" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://www.linkedin.com/in/elie-maalouly/" rel="nofollow noopener noreferrer"><i class="fa-brands fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2025 <a href="https://quantifiedcuriosities.com">Quantified Curiosities</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    <!-- start custom comments scripts -->
+
+<!-- end custom comments scripts -->
+
+
+
+
+
+  </body>
+</html>

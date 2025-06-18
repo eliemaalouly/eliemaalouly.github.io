@@ -10,7 +10,7 @@
   <head>
     <meta charset="utf-8">
 
-<!-- begin _includes/seo.html --><title>That’s Embarrassing! (for you not for me) - Quantified Curiosities</title>
+<!-- begin _includes/seo.html --><title>That’s Embarrassing! You’re imagining pages now? - Quantified Curiosities</title>
 <meta name="description" content="Finding clarity in the things no one asked to be clarified.">
 
 
@@ -21,7 +21,7 @@
 <meta property="og:type" content="website">
 <meta property="og:locale" content="en">
 <meta property="og:site_name" content="Quantified Curiosities">
-<meta property="og:title" content="That’s Embarrassing! (for you not for me)">
+<meta property="og:title" content="That’s Embarrassing! You’re imagining pages now?">
 <meta property="og:url" content="https://quantifiedcuriosities.com/404.html">
 
 
@@ -76,10 +76,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/favicon/apple-touch-icon.png" />
 <link rel="manifest" href="/assets/images/favicon/site.webmanifest" />
 
-<link
-  href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
-  rel="stylesheet"
-/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
 <script>
   (function () {
@@ -110,22 +107,16 @@
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-check-compat.js"></script>
 
+<script src="/assets/js/env-config.js"></script>
+
 <script>
   window.addEventListener('DOMContentLoaded', function () {
-    const firebaseConfig = {
-      apiKey: "AIzaSyBfzn-eQV1lY0dHAtXE0_oaYUK8f41b2xA",
-      authDomain: "duckcounter-88107.firebaseapp.com",
-      databaseURL: "https://duckcounter-88107-default-rtdb.europe-west1.firebasedatabase.app",
-      projectId: "duckcounter-88107",
-      storageBucket: "duckcounter-88107.firebasestorage.app",
-      messagingSenderId: "17921681395",
-      appId: "1:17921681395:web:42154225a98d8a20d81486"
-    };
+    const firebaseConfig = window.env.firebase;
 
     firebase.initializeApp(firebaseConfig);
 
     firebase.appCheck().activate(
-      '6LeFDWIrAAAAACLgk8Y1IhzewXUYRzT0JjN33NrO',
+      firebaseConfig.appCheckKey,
       true
     );
   });
@@ -134,63 +125,70 @@
 <script src="/assets/js/easter-egg.js"></script>
 
 <script>
-window.addEventListener("load", function(){
+  window.addEventListener("load", function () {
 
-  var cc = window.cookieconsent.initialise({
-    palette: {
-      popup:  { background: "#000" },
-      button: { background: "#f1d600", text: "#000" }
-    },
-    theme: "edgeless",
-    type: "opt-in",
-    content: {
-      message: "We use cookies for analytics. Do you accept?",
-      dismiss: "Accept",
-      deny:    "Decline",
-      link:    "Learn more",
-      href:    "/privacy-policy/"
-    },
+    var cc = window.cookieconsent.initialise({
+      palette: {
+        popup: { background: "#000" },
+        button: { background: "#f1d600", text: "#000" }
+      },
+      theme: "edgeless",
+      type: "opt-in",
+      content: {
+        message: "We use cookies for analytics. Do you accept?",
+        dismiss: "Accept",
+        deny: "Decline",
+        link: "Learn more",
+        href: "/privacy-policy/"
+      },
 
-    onInitialise: function(status) {
-      if (this.hasConsented()) {
-        console.log("CookieConsent: initial consent granted");
-        loadAnalytics();
-      } else {
-        console.log("CookieConsent: initial consent denied");
+      onInitialise: function (status) {
+        if (this.hasConsented()) {
+          console.log("CookieConsent: initial consent granted");
+          loadAnalytics();
+        } else {
+          console.log("CookieConsent: initial consent denied");
+        }
+      },
+
+      onStatusChange: function (status, chosenBefore) {
+        if (this.hasConsented()) {
+          console.log("CookieConsent: status changed to granted");
+          loadAnalytics();
+        } else {
+          console.log("CookieConsent: status changed to denied");
+        }
       }
-    },
+    });
 
-    onStatusChange: function(status, chosenBefore) {
-      if (this.hasConsented()) {
-        console.log("CookieConsent: status changed to granted");
-        loadAnalytics();
-      } else {
-        console.log("CookieConsent: status changed to denied");
-      }
+    function loadAnalytics() {
+      if (window.GA_LOADED) return;
+      window.GA_LOADED = true;
+      console.log("Loading Google Analytics…");
+
+      var s = document.createElement('script');
+      s.src = "https://www.googletagmanager.com/gtag/js?id=G-3L16HRLCNP";
+      s.async = true;
+      document.head.appendChild(s);
+
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', 'G-3L16HRLCNP', { anonymize_ip: true });
     }
   });
-
-  function loadAnalytics() {
-    if (window.GA_LOADED) return;
-    window.GA_LOADED = true;
-    console.log("Loading Google Analytics…");
-
-    var s = document.createElement('script');
-    s.src = "https://www.googletagmanager.com/gtag/js?id=G-3L16HRLCNP";
-    s.async = true;
-    document.head.appendChild(s);
-
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    window.gtag = gtag;
-    gtag('js', new Date());
-    gtag('config', 'G-3L16HRLCNP', { anonymize_ip: true });
-  }
-});
 </script>
 
-
-
+<script>
+  window.addEventListener("DOMContentLoaded", () => {
+    const thread = document.getElementById("cusdis_thread");
+    if (thread && window.env) {
+      thread.setAttribute("data-host", window.env.cusdis.url);
+      thread.setAttribute("data-app-id", window.env.cusdis.app_id);
+    }
+  });
+</script>
   </head>
 
   <body class="layout--single masthead-relative" dir="ltr">
@@ -283,7 +281,7 @@ window.addEventListener("load", function(){
 
 
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
-    <meta itemprop="headline" content="That’s Embarrassing! (for you not for me)">
+    <meta itemprop="headline" content="That’s Embarrassing! You’re imagining pages now?">
     
     
     
@@ -292,7 +290,7 @@ window.addEventListener("load", function(){
       
       <header class="page-header">
         <h1 id="page-title" class="page__title" itemprop="headline">
-          <a href="https://quantifiedcuriosities.com/404.html" itemprop="url">That’s Embarrassing! (for you not for me)
+          <a href="https://quantifiedcuriosities.com/404.html" itemprop="url">That’s Embarrassing! You’re imagining pages now?
 </a>
         </h1>
         
@@ -305,7 +303,7 @@ window.addEventListener("load", function(){
       <section class="page__content" itemprop="text">
         
         <blockquote>
-  <p>Scraping the whole internet using a very polite bot:</p>
+  <p>But let’s make sure anyway. Scraping the whole internet using a very polite bot:</p>
 </blockquote>
 
 <hr />
@@ -378,9 +376,9 @@ window.addEventListener("load", function(){
   const botMessages = [
     "🤖 ScrapyBot> Initiating page retrieval protocol...",
     "🤖 ScrapyBot> Crawled 8,142,387 pages so far.",
-    "🤖 ScrapyBot> No record of this page in the dataset.",
-    "🤖 ScrapyBot> Possibility: this page was imaginary.",
-    "🤖 ScrapyBot> return to safety: [homepage] or [random post]",
+    "🤖 ScrapyBot> No record of this page anywhere.",
+    "🤖 ScrapyBot> Possibility: This page is a figment of your imagination. Kind of like unicorns, time travel, or polite group chats.",
+    "🤖 ScrapyBot> Let’s get you back to where things actually exist: [homepage] or [random post]",
     "🤖 ScrapyBot> Or stay here and check out some absolutely useless facts (If you check out at least 3 facts you get a reward!)"
   ];
 
