@@ -13,7 +13,9 @@ document.addEventListener('DOMContentLoaded', function () {
     let lastScrollTop = 0;
     const DOWN_SCROLL_THRESHOLD = 75;
     const UP_SCROLL_THRESHOLD = 100;
+    const DOWN_SCROLL_HIDE_THRESHOLD = 100;
     let scrollUpAmount = 0;
+    let scrollDownAmount = 0;
     let isInPageNavigation = false;
     let inPageNavigationTimer = null;
 
@@ -44,13 +46,19 @@ document.addEventListener('DOMContentLoaded', function () {
         if (scrollTop <= DOWN_SCROLL_THRESHOLD) {
             masthead.classList.remove('masthead--hidden');
             scrollUpAmount = 0;
+            scrollDownAmount = 0;
         }
         else if (scrollTop > lastScrollTop) {
-            masthead.classList.add('masthead--hidden');
+            scrollDownAmount += (scrollTop - lastScrollTop);
             scrollUpAmount = 0;
+
+            if (scrollDownAmount >= DOWN_SCROLL_HIDE_THRESHOLD) {
+                masthead.classList.add('masthead--hidden');
+            }
         }
         else {
             scrollUpAmount += (lastScrollTop - scrollTop);
+            scrollDownAmount = 0;
 
             if (scrollUpAmount >= UP_SCROLL_THRESHOLD) {
                 masthead.classList.remove('masthead--hidden');
