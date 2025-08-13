@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     {
       file: 'light.css',
       logo: '/assets/images/logo/logo-light.png',
+      themeColor: '#f3f3f3',
       icon: `
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
            xmlns="http://www.w3.org/2000/svg">
@@ -19,6 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
     {
       file: 'dark.css',
       logo: '/assets/images/logo/logo-dark.png',
+      themeColor: '#262a35',
       icon: `
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
            xmlns="http://www.w3.org/2000/svg">
@@ -40,6 +42,16 @@ document.addEventListener('DOMContentLoaded', () => {
     return;
   }
 
+  function setMetaThemeColor(hex) {
+    let tag = document.querySelector('meta[name="theme-color"]');
+    if (!tag) {
+      tag = document.createElement('meta');
+      tag.setAttribute('name', 'theme-color');
+      document.head.appendChild(tag);
+    }
+    tag.setAttribute('content', hex);
+  }
+
   function getCurrentThemeIndex() {
     const currentHref = themeLink.getAttribute('href');
     return themes.findIndex(theme => currentHref.includes(theme.file));
@@ -59,6 +71,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const newMode = theme.file.includes('dark') ? 'dark' : 'light';
     document.documentElement.setAttribute('data-theme', newMode);
     localStorage.setItem('preferred-theme-file', theme.file);
+
+    setMetaThemeColor(theme.themeColor);
 
     if (typeof gtag === 'function') {
       gtag('event', 'theme_switch', {
