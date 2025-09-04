@@ -11,6 +11,12 @@ var store = [{
         "url": "/posts/greek-myth-network2/",
         "teaser": "/assets/images/posts/greek-myth-network2/hero.png"
       },{
+        "title": "Quantifying Love",
+        "excerpt":"How do poets name love? A data-driven exploration of 14 Arabic words for love that traces their etymological roots, poetic functions, and shifting meanings across twelve historical eras. Using a 2-million-verse corpus and sentiment analysis, the analysis shows how word choice maps to emotional polarity and co‑occurrence communities, revealing that...","categories": [],
+        "tags": [],
+        "url": "/posts/arabic-love-word-analysis/",
+        "teaser": "/assets/images/posts/arabic-love-word-analysis/hero.png"
+      },{
     "title": "About",
     "excerpt":"I’m Elie Maalouly, I work as a robotics researcher, based in Naples, Italy. This is a space where I explore personal interests (often light, occasionally absurd) through the lens of data. Follow Many of my posts have corresponding code available on GitHub. You can follow this site via RSS. Contact...","url": "https://quantifiedcuriosities.com/about/"
   },{
