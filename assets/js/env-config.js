@@ -11,6 +11,6 @@ window.env = {
     },
     "cusdis": {
         "url": "https://34.73.130.56.sslip.io",
-        "app_id": "dcfefdac-f7f9-45a8-8758-cf7c7edd654b"
+        "app_id": "da4b55a3-1fd6-43aa-9723-db8c7cbb1fbe"
     }
 };
