@@ -10,7 +10,7 @@ window.env = {
         "appCheckKey": "6LeFDWIrAAAAACLgk8Y1IhzewXUYRzT0JjN33NrO"
     },
     "cusdis": {
-        "url": "https://34.73.130.56.sslip.io",
-        "app_id": "da4b55a3-1fd6-43aa-9723-db8c7cbb1fbe"
+        "url": "https://34.182.46.74.sslip.io",
+        "app_id": "e1c2cb1a-582b-4f83-ab17-0a49343e6e8f"
     }
 };
